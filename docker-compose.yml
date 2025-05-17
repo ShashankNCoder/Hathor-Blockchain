@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/data:/app/data
+    environment:
+      - PORT=5000
+      - WALLET_API=http://wallet:8000
+    depends_on:
+      - wallet
+
+  wallet:
+    image: hathornetwork/hathor-wallet-headless:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - NETWORK=testnet
+      - STATUS_FILE=/data/status.json
+    volumes:
+      - wallet-data:/data
+
+  bot:
+    build:
+      context: ./bot
+    environment:
+      - API_BASE=http://backend:5000/api
+    depends_on:
+      - backend
+
+volumes:
+  wallet-data: 

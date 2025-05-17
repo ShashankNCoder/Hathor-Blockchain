@@ -1,0 +1,47 @@
+ 
+$ docker stop hathor-wallet-headless && docker rm hathor-wallet-headless
+hathor-wallet-headless
+hathor-wallet-headless
+
+ 
+$ docker run -d \
+  --name hathor-wallet-headless \
+  -p 8000:8000 \
+  -e HEADLESS_NETWORK=testnet \
+  -e HEADLESS_SEED_DEFAULT="crop trumpet calm beef cloud little culture attitude stick recycle loyal pipe train steel expire shiver never crack excess prefer fossil copy warm goat" \
+  -e HEADLESS_SERVER=https://node1.testnet.hathor.network/v1a/ \
+  -e HEADLESS_TX_MINING_URL=https://txmining.testnet.hathor.network/ \     
+  hathornetwork/hathor-wallet-headless
+21985eee8fe7704517aec66d490ba02fd1d740d1d0540f35c20822a526b17b6a
+
+
+docker logs hathor-wallet-headless
+
+ 
+$ curl -X POST http://localhost:8000/start \
+  -H "Content-Type: application/json" \
+  -d '{
+    "wallet-id": "123",
+    "seedKey": "default",
+    "passphrase": ""
+  }'
+{"success":true}
+ 
+$ curl -X POST http://localhost:5000/api/createWallet   -H "Content-Type: application/json"   -d '{"seed": "crop trumpet calm beef cloud little culture attitude stick recycle loyal pipe train steel expire shiver never crack excess prefer fossil copy warm goat"}'
+{"walletId":"4567f1af-034d-4056-b550-6ec96f1db02d","success":true}
+
+ 
+$ curl -H "X-Wallet-Id: 123" http://localhost:8000/wallet/status
+{"statusCode":3,"statusMessage":"Ready","network":"testnet","serverUrl":"https://node1.testnet.hathor.network/v1a/","serverInfo":{"version":"0.63.1","network":"testnet-golf","min_weight":8,"min_tx_weight":8,"min_tx_weight_coefficient":0,"min_tx_weight_k":0,"token_deposit_percentage":0.01,"reward_spend_min_blocks":300,"max_number_inputs":255,"max_number_outputs":255,"decimal_places":2,"genesis_block_hash":"0000033139d08176d1051fb3a272c3610457f0c7f_tx1_hash":"00e161a6b0bee1781ea9300680913fb76fd0fac4acab527cd9626cc1514abdc9","genesis_tx2_hash":"00975897028ceb037307327c953f5e7ad4d3f42402d71bd3d11ecb63ac39f01a","native_token":{"name":"Hathor","symbol":_tx1_hash":"00e161a6b0bee1781ea9300680913fb76fd0fac4acab527cd9626cc1514abdc9","genesis_tx2_hash":"00975897028ceb037307327c953f5e7ad4d3f42402d71bd3d11ecb63ac39f01a","native_token":{"name":"Hathor","symbol":"HTR"}}}
+
+ 
+$ curl -H "X-Wallet-Id: 123" http://localhost:8000/wallet/address
+{"address":"WhByWwuZhHEWswGzNMjP2ZX3CDj7s7piHE"}
+
+ 
+$ curl -H "X-Wallet-Id: 123" http://localhost:8000/wallet/status
+{"statusCode":3,"statusMessage":"Ready","network":"testnet","serverUrl":"https://node1.testnet.hathor.network/v1a/","serverInfo":{"version":"0.63.1","network":"testnet-golf","min_weight":8,"min_tx_weight":8,"min_tx_weight_coefficient":0,"min_tx_weight_k":0,"token_deposiversion":"0.63.1","network":"testnet-golf","min_weight":8,"min_tx_weight":8,"min_tx_weight_coefficient":0,"min_tx_weight_k":0,"token_deposit_percentage":0.01,"reward_spend_min_blocks":300,"max_number_inputs":255,"max_number_outputs":255,"decimal_places":2,"genesis_block_hash":"0000033139d08176d1051fb3a272c3610457f0c7f686afbe0afe3d37f966db85","genesis_tx1_hash":"00e161a6b0bee1781ea9300680913fb76fd0fac4acab527cd9626cc1514abdc9","genesis_tx2_hash":"00975897028ceb037307327c953f5e7ad4d3f42402d71bd3d11ecb63ac39f01a","native_token":{"name":"Hathor","symbol":"HTR"}}}
+ 
+$ curl -H "X-Wallet-Id: 123" http://localhost:8000/wallet/balance
+{"available":100000,"locked":0}
+
