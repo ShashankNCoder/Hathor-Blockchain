@@ -1,9 +1,5 @@
 # HathorChat
 
-<div align="center">
-
-![HathorChat Logo](frontend/client/src/assets/logo.png)
-
 **Tokenized Communities in Telegram**
 
 </div>
