@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'wouter';
-import { useWallet } from '@/context/WalletContext';
+import { useWallet } from '@/lib/wallet/WalletContext';
 import BottomNavigation from './BottomNavigation';
 import ActionPanel from './ActionPanel';
 import { useComingSoon } from '@/hooks/use-coming-soon';

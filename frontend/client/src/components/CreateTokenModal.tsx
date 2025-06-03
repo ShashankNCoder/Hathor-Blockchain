@@ -1,134 +1,90 @@
-import React, { useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
-import hathorApi from '@/lib/api';
+import React, { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { useComingSoon } from "@/hooks/use-coming-soon";
 
 interface CreateTokenModalProps {
   isVisible: boolean;
   onClose: () => void;
-  onSuccess: (tokenId: string, name: string, symbol: string) => void;
 }
 
-const CreateTokenModal: React.FC<CreateTokenModalProps> = ({ isVisible, onClose, onSuccess }) => {
+const CreateTokenModal: React.FC<CreateTokenModalProps> = ({ isVisible, onClose }) => {
   const { toast } = useToast();
-  const [name, setName] = useState('');
-  const [symbol, setSymbol] = useState('');
-  const [amount, setAmount] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const { notifyComingSoon } = useComingSoon();
+  const [name, setName] = useState("");
+  const [symbol, setSymbol] = useState("");
+  const [amount, setAmount] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!name || !symbol || !amount) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all fields",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const response = await hathorApi.createToken({
-        name,
-        symbol,
-        amount: parseInt(amount)
-      });
-
-      onSuccess(response.id, name, symbol);
-      onClose();
-      
-      // Reset form
-      setName('');
-      setSymbol('');
-      setAmount('');
-    } catch (error) {
-      console.error('Error creating token:', error);
-      toast({
-        title: "Error Creating Token",
-        description: "There was an error creating your token. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    notifyComingSoon("Token Creation");
+    onClose();
   };
 
   if (!isVisible) return null;
 
   return (
-    <>
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
-        onClick={onClose}
-      ></div>
-      <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-neutral-800 rounded-lg p-6 w-full max-w-md mx-4">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold text-dark dark:text-white">Create New Token</h3>
-            <button className="p-1" onClick={onClose}>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 w-full max-w-md">
+        <h2 className="text-xl font-bold mb-4">Create New Token</h2>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Token Name
-              </label>
+              <label className="block text-sm font-medium mb-1">Token Name</label>
               <input
                 type="text"
-                id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2aabee] focus:border-transparent dark:bg-neutral-700 dark:text-white"
-                placeholder="e.g. Community Token"
+                className="w-full p-2 border rounded-lg dark:bg-neutral-700 dark:border-neutral-600"
+                placeholder="e.g. My Token"
+                required
               />
             </div>
-
+            
             <div>
-              <label htmlFor="symbol" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Token Symbol
-              </label>
+              <label className="block text-sm font-medium mb-1">Token Symbol</label>
               <input
                 type="text"
-                id="symbol"
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2aabee] focus:border-transparent dark:bg-neutral-700 dark:text-white"
-                placeholder="e.g. CTK"
-                maxLength={5}
+                className="w-full p-2 border rounded-lg dark:bg-neutral-700 dark:border-neutral-600"
+                placeholder="e.g. MTK"
+                required
               />
             </div>
-
+            
             <div>
-              <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Initial Supply
-              </label>
+              <label className="block text-sm font-medium mb-1">Initial Supply</label>
               <input
                 type="number"
-                id="amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2aabee] focus:border-transparent dark:bg-neutral-700 dark:text-white"
+                className="w-full p-2 border rounded-lg dark:bg-neutral-700 dark:border-neutral-600"
                 placeholder="e.g. 1000000"
                 min="1"
+                required
               />
             </div>
-
+          </div>
+          
+          <div className="flex justify-end space-x-3 mt-6">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-[#2aabee] hover:bg-[#2196d3] text-white font-medium py-2 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 bg-[#2aabee] text-white rounded-lg hover:bg-[#2aabee]/90"
             >
-              {isLoading ? 'Creating...' : 'Create Token'}
+              Create Token
             </button>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

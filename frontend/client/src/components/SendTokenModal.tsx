@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { TokenWithBalance } from '@/types';
+import { TokenBalance } from "@/lib/hathor";
 
 interface SendTokenModalProps {
   isVisible: boolean;
   onClose: () => void;
-  tokens: TokenWithBalance[];
-  selectedToken?: TokenWithBalance;
+  tokens: TokenBalance[];
+  selectedToken?: TokenBalance;
   onSend: (recipient: string, tokenId: string, amount: number, message?: string) => Promise<void>;
 }
 

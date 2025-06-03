@@ -12,7 +12,8 @@ import RewardsPage from "@/pages/RewardsPage";
 import ProfilePage from "@/pages/ProfilePage";
 import CreateTokenPage from "@/pages/CreateTokenPage";
 import LoadingScreen from "@/components/LoadingScreen";
-import { useWallet } from "@/context/WalletContext";
+import { useWallet } from "@/lib/wallet/WalletContext";
+import { WalletProvider } from "@/lib/wallet/WalletContext";
 import { initTelegramApp } from "@/lib/telegram";
 
 function Layout({ children }: { children: React.ReactNode }) {
@@ -64,6 +65,9 @@ function App() {
     // Initialize Telegram Mini App
     const initializeApp = () => {
       try {
+        // Set dark mode by default
+        document.documentElement.classList.add('dark');
+        
         if (window.Telegram && window.Telegram.WebApp) {
           // Initialize Telegram Web App
           initTelegramApp();
@@ -72,11 +76,6 @@ function App() {
           const viewportMeta = document.querySelector('meta[name="viewport"]');
           if (viewportMeta) {
             viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-          }
-          
-          // Set proper theme
-          if (window.Telegram.WebApp.colorScheme === 'dark') {
-            document.documentElement.classList.add('dark');
           }
         } else {
           // Running in browser mode
@@ -99,8 +98,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <WalletProvider>
+          <Router />
         <Toaster />
-        {isLoading ? <LoadingScreen /> : <Router />}
+        </WalletProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

@@ -94,7 +94,7 @@ frontend/
    ```
    npm run dev
    ```
-5. Open your browser and navigate to `http://localhost:5173` to see the application.
+5. Open your browser and navigate to `http://localhost:5000` to see the application.
    or else use(to run):
    ```
    npx tsx server/index.ts

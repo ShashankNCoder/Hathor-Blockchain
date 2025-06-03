@@ -6,14 +6,20 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(import.meta.dirname, "client", "src"),
-      "@shared": path.resolve(import.meta.dirname, "shared"),
-      "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+      "@": path.resolve(__dirname, "client", "src"),
     },
   },
-  root: path.resolve(import.meta.dirname, "client"),
+  root: path.resolve(__dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
   },
+  server: {
+    host: true, // Required to expose to network (for ngrok)
+    port: 5000,
+    cors: true,
+    allowedHosts: ['.ngrok-free.app'] // Wildcard match for any ngrok subdomain
+    // Alternatively, allow a specific domain:
+    // allowedHosts: ['a9aa-223-237-165-105.ngrok-free.app']
+  }
 });

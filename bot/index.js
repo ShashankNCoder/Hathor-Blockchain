@@ -24,16 +24,16 @@ bot.start((ctx) => {
 🚀 We turn any Telegram group into a token-powered community-no crypto expertise needed.
 
 Here's what you can do:
-* /import_wallet - Import your own wallet
+* /import\\_wallet - Import your own wallet
 * /wallet - View your wallet
 * /tip @user 5 VIBE - Tip someone
-* /create_token - Create your own token
-* /my_badges - Earn badges & rewards
+* /create\\_token - Create your own token
+* /my\\_badges - Earn badges & rewards
 * /unlock - Unlock content
 
 💡 Type /help to see the full list of commands.
 
-_You're ready to explore tokenized chat magic!_`,
+\\_You're ready to explore tokenized chat magic!\\_`,
     { parse_mode: 'Markdown' }
   );
 
@@ -55,20 +55,19 @@ Welcome to HathorChat – where tokenized communities come alive! Here's what I 
 /help – Show this help menu
 /contact – Contact support
 /wallet – View your auto-provisioned HTR wallet  
-/import_wallet – Import your own wallet
+/import\\_wallet – Import your own wallet
 /balance – Check your token + NFT balances  
 /status – check your wallet status
 /history – View your transaction history 
- 
 
 💸 *Token Features*
 \`/tip @username amount token\` – Tip someone (e.g. \`/tip @alice 10 COFFEE\`)  
-\`/create_token\` – Create your own custom token  
+\`/create\\_token\` – Create your own custom token  
 \`/send amount token @username\` – Send tokens directly  
 
 🏆 *Rewards & Badges*
-/my_badges – View your earned NFT badges  
-/claim_badge – Manually claim badge if eligible  
+/my\\_badges – View your earned NFT badges  
+/claim\\_badge – Manually claim badge if eligible  
 
 🔒 *Token Gating*
 /unlock – Unlock premium content  
@@ -76,14 +75,14 @@ Welcome to HathorChat – where tokenized communities come alive! Here's what I 
 
 📊 *Admin Tools* (Admins only)
 /dashboard – Open Admin Dashboard  
-/set_threshold – Set token thresholds  
+/set\\_threshold – Set token thresholds  
 /analytics – View token stats  
 
 🎮 *Bonus Features*
-/play_quiz – Play a quiz to earn tokens  
+/play\\_quiz – Play a quiz to earn tokens  
 /raffle – Join a raffle  
 
-_Questions? Ask @HathorOfficial_`,
+\\_Questions? Ask @HathorOfficial\\_`,
     { parse_mode: 'Markdown' }
   );
 });

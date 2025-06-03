@@ -1,19 +1,10 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'wouter';
-import { useWallet } from '@/context/WalletContext';
+import React from 'react';
+import { useWallet } from '@/lib/wallet/WalletContext';
 import logo from '@/assets/logo.png';
-import { WalletConnect } from '@/components/WalletConnect';
+import { WalletConnect } from '@/lib/wallet/WalletConnect';
 
 const WelcomePage: React.FC = () => {
-  const { isAuthenticated, wallet } = useWallet();
-  const [, setLocation] = useLocation();
-
-  useEffect(() => {
-    // Only redirect if we have both authentication and a wallet address
-    if (isAuthenticated && wallet?.address) {
-      setLocation('/home');
-    }
-  }, [isAuthenticated, wallet, setLocation]);
+  const { wallet } = useWallet();
 
   return (
     <div className="flex flex-col h-full items-center justify-center p-6">
@@ -26,16 +17,9 @@ const WelcomePage: React.FC = () => {
           />
         </div>
         
-        <div className="w-full max-w-[200px] mb-4">
+        <div>
           <WalletConnect />
         </div>
-        
-        <button 
-          onClick={() => setLocation('/home')} 
-          className="bg-hathor-purple-700 hover:bg-hathor-purple-600 text-white rounded-full px-8 py-2 mb-8 font-medium outline outline-1 outline-hathor-purple-600"
-        >
-          Start
-        </button>
         
         <h1 className="text-2xl font-bold mb-2 text-center">Welcome to HathorChat</h1>
         <p className="text-center text-neutral-600 dark:text-neutral-400 mb-10">Tokenized Communities in Telegram</p>
