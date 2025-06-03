@@ -172,3 +172,9 @@ This project is proprietary software.
 - [Telegraf](https://telegraf.js.org/) - Framework for Telegram bot development
 - [React](https://reactjs.org/) - UI library for the frontend
 - [Express](https://expressjs.com/) - Web framework for the backend API
+
+# Drive Link
+
+```
+https://drive.google.com/drive/folders/19SHzhH-PvPX_64dAotD4yLapQWMHXGBz?usp=sharing
+```
